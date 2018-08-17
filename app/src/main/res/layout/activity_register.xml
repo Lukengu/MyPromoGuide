@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Register"
+    android:background="@drawable/layout_background">
+
+    <ScrollView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        >
+    <LinearLayout
+       android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name and Surname"
+            android:id="@+id/name"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:id="@+id/gender_text"
+                android:text="Gender"/>
+
+            <info.hoang8f.android.segmented.SegmentedGroup
+                xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                segmentedgroup:sc_border_width="2dp"
+                segmentedgroup:sc_corner_radius="10dp">
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    style="@style/RadioButton" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    style="@style/RadioButton" />
+
+            </info.hoang8f.android.segmented.SegmentedGroup>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dob_text"
+            android:text="Date of Birth"/>
+
+        <DatePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:id="@+id/dob"
+            android:calendarViewShown="false"
+            />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Suburb"
+            android:id="@+id/suburb"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:id="@+id/city"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Province"
+            android:id="@+id/province"
+            android:layout_marginTop="9dp"
+            android:layout_marginBottom="9dp"/>
+
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:id="@+id/btn_send"
+            android:text="Submit and Enjoy"
+            android:textColor="#ffffff"
+            android:background="@drawable/button_background"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:layout_marginBottom="9dp"
+            />
+
+    </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

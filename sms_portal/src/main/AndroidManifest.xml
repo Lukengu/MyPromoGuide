@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="mypromoguide.pro.novatechsolutions.app.sms_portal" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+</manifest>

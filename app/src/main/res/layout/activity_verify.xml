@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Verify"
+    android:background="@drawable/layout_background">
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/logo"
+        android:id="@+id/logo"
+        />
+
+    <TextView
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:text="Please Check Your SMS for a one time pin"
+        android:textStyle="bold"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:id="@+id/label" />
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cellphone_number"
+        android:inputType="number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/label"
+
+        />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:id="@+id/btn_send"
+        android:text="Continue"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_background"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/cellphone_number"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+
+
+
+        />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:id="@+id/btn_resend"
+        android:text="Request new OTP"
+        android:textColor="#ffffff"
+        android:background="@drawable/button_background"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/btn_send"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+
+
+
+        />
+</RelativeLayout>
