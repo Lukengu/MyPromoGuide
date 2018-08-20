@@ -1,6 +1,7 @@
 
 package mypromoguide.pro.novatechsolutions.app.mypromoguide.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,7 +85,8 @@ public class Category extends Fragment implements OnServiceResponseListener, Rec
         }
 
         if (id == R.id.action_back) {
-            ((Content) getActivity()).loadFragment("home", getArguments());
+            ((Content) getActivity()).loadFragment("home", null);
+
             return true;
         }
 
@@ -114,6 +116,8 @@ public class Category extends Fragment implements OnServiceResponseListener, Rec
         bundle.putInt("store_id", store.getId());
        // Toast.makeText(getActivity(), "Clicked", Toast.LENGTH_LONG).show();
         ((Content) getActivity()).loadFragment("product", bundle);
+
+
 
     }
 }

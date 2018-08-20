@@ -40,7 +40,7 @@ public class Stores extends Fragment implements  RecycleViewAdapterItemListener 
         View view = inflater.inflate(R.layout.stores,
                 container, false);
 
-        Log.e("REACHINGOUT","PEACE");
+
 
         mRecyclerView = view.findViewById(R.id.my_recycler_view);
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 3);

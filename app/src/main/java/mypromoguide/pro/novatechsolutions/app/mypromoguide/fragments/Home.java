@@ -60,6 +60,8 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
     private RecyclerView my_recycler_view;
     private   StoreAdapter storeAdapter;
 
+    private int  force_refresh;
+
 
 
     @Override
@@ -74,9 +76,11 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
         no_location_store.setTypeface(AppTypeFace.NewInstance(getActivity()).getTypeFace());
 
 
-        viewPager.setVisibility(View.VISIBLE);
+       // viewPager.setVisibility(View.VISIBLE);
         no_location_store.setVisibility(View.GONE);
         storeAdapter = new StoreAdapter(getActivity(), new ArrayList<Store>());
+        force_refresh = 0;
+
         load();
 
 
@@ -259,10 +263,17 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
                     0, this);
 
-            location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+           boolean  gps_enabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+           boolean  network_enabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if(gps_enabled)
+                location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(network_enabled)
+                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
 
             storeListing();
 
@@ -275,10 +286,12 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
     public void onSuccess(Object object) {
         if( ((List<Store>) object).size() > 0 ) {
             no_location_store.setVisibility(View.GONE);
+
         }
-        viewPager.setVisibility(View.VISIBLE);
+
 
         showGrid((List<Store>) object, false);
+
         new SearchRequest(new OnServiceResponseListener(){
 
             @Override
@@ -308,13 +321,36 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
 
-       if(!fromsearch) {
-           viewPager.setVisibility(View.VISIBLE);
+       if(fromsearch) {
+           viewPager.setVisibility(View.GONE);
+           my_recycler_view.setVisibility(View.VISIBLE);
+           GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 3);
+           //   StoreAdapter storeAdapter = new StoreAdapter(getActivity(), storeList);
+
+           if (storeList.size() == 0) {
+               viewPager.setVisibility(View.GONE);
+               no_location_store.setVisibility(View.VISIBLE);
+           }
+           storeAdapter = new StoreAdapter(getActivity(), storeList);
+           storeAdapter.setOnRecycleViewAdapterItemListener(this);
+           my_recycler_view.setAdapter(storeAdapter);
+           my_recycler_view.setLayoutManager(mGridLayoutManager);
+           my_recycler_view.setHasFixedSize(true);
+           indicators.setVisibility(View.GONE);
+
+
+
+       } else {
+
+           if(  viewPager.getVisibility() == View.GONE){
+               viewPager.setVisibility(View.VISIBLE);
+           }
            my_recycler_view.setVisibility(View.GONE);
+
            int size = storeList.size();
 
            if (size == 0) {
-               viewPager.setVisibility(View.GONE);
+                viewPager.setVisibility(View.GONE);
                no_location_store.setVisibility(View.VISIBLE);
            }
 
@@ -333,19 +369,24 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
 
                    // System.out.println(s.toArray().toString());
                    Stores fragment = new Stores();
-                   fragment.setList(storeList);
+                   fragment.setList(s);
                    //Bundle b = new Bundle();
 
                    adapter.addFrag(fragment, "");
-
+                   adapter.notifyDataSetChanged();
                }
 
-               adapter.notifyDataSetChanged();
+
                viewPager.setAdapter(adapter);
 
                pageIndicator = new PageIndicator(getActivity(), indicators, viewPager, R.drawable.indicators);
                pageIndicator.setPageCount(pages);
                pageIndicator.show();
+               if(force_refresh == 0) {
+                   load();
+                   ++force_refresh;
+               }
+
            } else {
 
                Stores fragment = new Stores();
@@ -354,22 +395,6 @@ public class Home extends Fragment  implements RecycleViewAdapterItemListener, L
                adapter.notifyDataSetChanged();
                viewPager.setAdapter(adapter);
            }
-       } else {
-           viewPager.setVisibility(View.GONE);
-           my_recycler_view.setVisibility(View.VISIBLE);
-           GridLayoutManager mGridLayoutManager = new GridLayoutManager(getActivity(), 3);
-        //   StoreAdapter storeAdapter = new StoreAdapter(getActivity(), storeList);
-
-           if (this.storeList.size() == 0) {
-               viewPager.setVisibility(View.GONE);
-               no_location_store.setVisibility(View.VISIBLE);
-           }
-           storeAdapter = new StoreAdapter(getActivity(), this.storeList);
-           storeAdapter.setOnRecycleViewAdapterItemListener(this);
-           my_recycler_view.setAdapter(storeAdapter);
-           my_recycler_view.setLayoutManager(mGridLayoutManager);
-           my_recycler_view.setHasFixedSize(true);
-           indicators.setVisibility(View.GONE);
 
        }
     }

@@ -192,10 +192,18 @@ public class StoresMap   extends Fragment implements OnMapReadyCallback, Locatio
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
-                    0, this);
 
-            location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
+            boolean  gps_enabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean  network_enabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if(gps_enabled)
+                location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(network_enabled)
+                location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+
            //   Toast.makeText(getActivity(), "Location "+location.getLatitude(), Toast.LENGTH_LONG).show();
             LatLng current;
             if(from_search) {
